@@ -1,0 +1,77 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  binaryTargets = ["native", "linux-arm64-openssl-3.0.x"]
+  output = "../generated/prisma_client"
+}
+
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String         @id @default(uuid())
+  email         String         @unique
+  password      String
+  boards        Board[]        @relation("BoardOwner")
+  assigned      Task[]         @relation("Assignee")
+  notifications Notification[]
+
+  boardMemberships BoardMember[]
+}
+
+model Board {
+  id      String        @id @default(uuid())
+  name    String
+  ownerId String
+  owner   User          @relation("BoardOwner", fields: [ownerId], references: [id])
+  members BoardMember[]
+  columns Column[]
+}
+
+model BoardMember {
+  id      String @id @default(uuid())
+  user    User   @relation(fields: [userId], references: [id])
+  userId  String
+  board   Board  @relation(fields: [boardId], references: [id])
+  boardId String
+}
+
+model Column {
+  id      String @id @default(uuid())
+  name    String
+  board   Board  @relation(fields: [boardId], references: [id])
+  boardId String
+  tasks   Task[]
+}
+
+model Task {
+  id        String @id @default(uuid())
+  name      String
+  column    Column @relation(fields: [columnId], references: [id])
+  columnId  String
+  assignees User[] @relation("Assignee")
+  tags      Tag[]  @relation("TaskTag")
+}
+
+model Tag {
+  id    String @id @default(uuid())
+  name  String
+  tasks Task[] @relation("TaskTag")
+}
+
+model Notification {
+  id        String   @id @default(uuid())
+  message   String
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now())
+}

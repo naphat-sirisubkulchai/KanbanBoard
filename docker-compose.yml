@@ -1,0 +1,47 @@
+services:
+  app:
+    build: .
+    depends_on:
+      - db
+    ports:
+      - '3000:3000'
+    networks:
+      - 'prisma-network'
+    env_file:
+      - .env
+
+  db:
+    image: postgres:15
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: kanban
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - 'prisma-network'
+  prisma-studio:
+    image: node:lts-alpine3.17
+    working_dir: /app
+    volumes:
+      - .:/app
+    command: npx prisma studio --port 5555 --browser none
+    ports:
+      - "5555:5555"
+    env_file:
+      - .env
+    networks:
+      - prisma-network
+    depends_on:
+      - app
+      - db
+
+volumes:
+  postgres_data:
+
+networks:
+  prisma-network:
+    name: prisma-network
