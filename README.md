@@ -6,11 +6,19 @@ install step by step
 
 3.npm i
 
-4.npx prisma generate
+4.create .env file
 
-5.docker compose -f docker-compose.yml up --build -d
+DATABASE_URL="postgresql://postgres:postgres@db:5432/kanban?schema=public"
+JWT_SECRET=""
 
-6.docker compose exec app npx prisma migrate dev --name init
+
+Use https://jwtsecret.com/generate to generate JWT_SECRET
+
+5.npx prisma generate
+
+6.docker compose -f docker-compose.yml up --build -d
+
+7.docker compose exec app npx prisma migrate dev --name init
 
 
 
