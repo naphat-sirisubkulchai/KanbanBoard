@@ -1,7 +1,7 @@
 ## required
 1.Docker Desktop
 
-2.Node.js(version 22) & npm
+2.Node.js(version 22.9.0) & npm
 
 ## install step by step
 
