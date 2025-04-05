@@ -13,11 +13,11 @@
 
 4.create .env file
 
-4.1DATABASE_URL="postgresql://postgres:postgres@db:5432/kanban?schema=public"
+    4.1DATABASE_URL="postgresql://postgres:postgres@db:5432/kanban?schema=public"
 
-4.2JWT_SECRET=""
+    4.2JWT_SECRET=""
 
-4.3Use https://jwtsecret.com/generate to generate JWT_SECRET
+    4.3Use https://jwtsecret.com/generate to generate JWT_SECRET
 
 5.npx prisma generate
 
