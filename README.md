@@ -1,4 +1,8 @@
-install step by step
+#required
+1.Docker Desktop
+2.Node.js & npm
+
+#install step by step
 
 1.git clone https://github.com/naphat-sirisubkulchai/KanbanBoard.git
 
