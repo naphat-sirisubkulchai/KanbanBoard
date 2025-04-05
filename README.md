@@ -8,11 +8,11 @@ install step by step
 
 4.create .env file
 
-  DATABASE_URL="postgresql://postgres:postgres@db:5432/kanban?schema=public"
-  JWT_SECRET=""
+4.1DATABASE_URL="postgresql://postgres:postgres@db:5432/kanban?schema=public"
 
+4.2JWT_SECRET=""
 
-Use https://jwtsecret.com/generate to generate JWT_SECRET
+4.3Use https://jwtsecret.com/generate to generate JWT_SECRET
 
 5.npx prisma generate
 
